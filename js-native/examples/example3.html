@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <iframe id="_if1" scrolling="no" style="width : 100%" ></iframe>
+<script>
+  (function() {
+    var iframe = document.getElementById('_if1'),
+      iframeWin = iframe.contentWindow || iframe ,
+      iframDoc = iframeWin.document || iframe.contentDocument;
+    iframDoc.write('<html><head></head><body><script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js" ></sc' + 'ript><body></html>');
+    // 1.写入脚本
+    if(iframDoc.all) {
+      // 3.以前用户判断IE，现在很多浏览器都支持
+      var scArr = iframDoc.getElementsByTagName('script'),
+        oSc = scArr[scArr.length - 1];
+      // 4.检查一下iframe所有的js是否已经加载完成
+      _check();
+      return;
+      function _check() {
+        var rs = oSc.readyState;
+        if(rs == 'loaded' || rs == 'complete') {
+          iframDoc.close();
+          _height();
+          return;
+        }
+        setTimeout(_check, 100);
+      }
+    }
+    iframeWin.onload = _height;
+    // 2.iframe执行了onload以后将它的高度设置为内容的高度
+    iframDoc.write('<script> document.close(); </sc' + 'ript>');
+    function _height() {
+      iframe.style.height = iframDoc.body.scrollHeight + 'px';
+    }
+  })();
+</script>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1894464170,2955189889&fm=27&gp=0.jpg"/>
+<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516852910831&di=9d7efe562f07fe1696077c51abe2dc37&imgtype=0&src=http%3A%2F%2Fuploads.xuexila.com%2Fallimg%2F1610%2F704-161024215051.jpg">
+<link rel="stylesheet" type="text/css" href="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/soutu/css/soutu.css">
+<iframe src="http://www.baidu.com"></iframe>
+</body>
+</html>
